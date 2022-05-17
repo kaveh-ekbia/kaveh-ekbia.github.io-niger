@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="css/leaflet.css">
+        <link rel="stylesheet" href="css/qgis2web.css"><link rel="stylesheet" href="css/fontawesome-all.min.css">
+        <link rel="stylesheet" href="css/leaflet-search.css">
+        <link rel="stylesheet" href="css/leaflet-control-geocoder.Geocoder.css">
+        <style>
+        html, body, #map {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+        </style>
+        <title></title>
+    </head>
+    <body>
+        <div id="map">
+        </div>
+        <script src="js/qgis2web_expressions.js"></script>
+        <script src="js/leaflet.js"></script>
+        <script src="js/leaflet.rotatedMarker.js"></script>
+        <script src="js/leaflet.pattern.js"></script>
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+        <script src="js/rbush.min.js"></script>
+        <script src="js/labelgun.min.js"></script>
+        <script src="js/labels.js"></script>
+        <script src="js/leaflet-control-geocoder.Geocoder.js"></script>
+        <script src="js/leaflet-search.js"></script>
+        <script src="data/NER_adm01_feb2018_0.js"></script>
+        <script>
+        var highlightLayer;
+        function highlightFeature(e) {
+            highlightLayer = e.target;
+
+            if (e.target.feature.geometry.type === 'LineString') {
+              highlightLayer.setStyle({
+                color: '#ffff00',
+              });
+            } else {
+              highlightLayer.setStyle({
+                fillColor: '#ffff00',
+                fillOpacity: 1
+              });
+            }
+        }
+        var map = L.map('map', {
+            zoomControl:true, maxZoom:28, minZoom:4
+        }).fitBounds([[11.40106459490002,-2.4066465696037014],[23.82909160910006,18.5685365696038]]);
+        var hash = new L.Hash(map);
+        map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
+        var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
+        var bounds_group = new L.featureGroup([]);
+        function setBounds() {
+        }
+        function pop_NER_adm01_feb2018_0(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">State</th>\
+                        <td>' + (feature.properties['adm_01'] !== null ? autolinker.link(feature.properties['adm_01'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Country</th>\
+                        <td>' + (feature.properties['NOMREG'] !== null ? autolinker.link(feature.properties['NOMREG'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Language</th>\
+                        <td>' + (feature.properties['Language'] !== null ? autolinker.link(feature.properties['Language'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_NER_adm01_feb2018_0_0(feature) {
+            switch(String(feature.properties['Language'])) {
+                case 'Hausa':
+                    return {
+                pane: 'pane_NER_adm01_feb2018_0',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(44,201,206,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Hausa, Daza':
+                    return {
+                pane: 'pane_NER_adm01_feb2018_0',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(236,203,85,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Hausa, Teda, Tasawaq':
+                    return {
+                pane: 'pane_NER_adm01_feb2018_0',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(166,104,224,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Hausa, Zarma, Dendi, French':
+                    return {
+                pane: 'pane_NER_adm01_feb2018_0',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(73,109,228,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Kanuri, Daza':
+                    return {
+                pane: 'pane_NER_adm01_feb2018_0',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(171,221,127,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Moore & Dioula, Bamana, Zarma':
+                    return {
+                pane: 'pane_NER_adm01_feb2018_0',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(240,52,49,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Songhai-Koyraboro, Zarma, Songhoyboro Ciine, Dendi':
+                    return {
+                pane: 'pane_NER_adm01_feb2018_0',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,114,191,1.0)',
+                interactive: true,
+            }
+                    break;
+                default:
+                    return {
+                pane: 'pane_NER_adm01_feb2018_0',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+            }
+        }
+        map.createPane('pane_NER_adm01_feb2018_0');
+        map.getPane('pane_NER_adm01_feb2018_0').style.zIndex = 400;
+        map.getPane('pane_NER_adm01_feb2018_0').style['mix-blend-mode'] = 'normal';
+        var layer_NER_adm01_feb2018_0 = new L.geoJson(json_NER_adm01_feb2018_0, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_NER_adm01_feb2018_0',
+            layerName: 'layer_NER_adm01_feb2018_0',
+            pane: 'pane_NER_adm01_feb2018_0',
+            onEachFeature: pop_NER_adm01_feb2018_0,
+            style: style_NER_adm01_feb2018_0_0,
+        });
+        bounds_group.addLayer(layer_NER_adm01_feb2018_0);
+        map.addLayer(layer_NER_adm01_feb2018_0);
+        var osmGeocoder = new L.Control.Geocoder({
+            collapsed: true,
+            position: 'topleft',
+            text: 'Search',
+            title: 'Testing'
+        }).addTo(map);
+        document.getElementsByClassName('leaflet-control-geocoder-icon')[0]
+        .className += ' fa fa-search';
+        document.getElementsByClassName('leaflet-control-geocoder-icon')[0]
+        .title += 'Search for a place';
+        setBounds();
+        map.addControl(new L.Control.Search({
+            layer: layer_NER_adm01_feb2018_0,
+            initial: false,
+            hideMarkerOnCollapse: true,
+            propertyName: 'Language'}));
+        document.getElementsByClassName('search-button')[0].className +=
+         ' fa fa-binoculars';
+        </script>
+    </body>
+</html>
